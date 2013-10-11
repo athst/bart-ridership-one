@@ -26,6 +26,11 @@ body {
     box-sizing: border-box;
 }
 
+#stationinfo h3 {
+
+    margin-top: 0px;
+    margin-bottom:0px;
+}
 </style>
 
 </head>
@@ -178,10 +183,24 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
                 console.log("set station info");
 
-                    
+                // calculate various interesting stats
+
+                rides = data.map(function(x) { return x.exits; });
+
+                total_rides = Math.round(d3.sum(rides));
+
+
                 var infobox = d3.select("#stationinfo");
 
                 infobox.select("h3").text(station.station_name);
+
+                var html_string = 
+                    station.address + 
+                    "<br /><br /><b>id: </b>" + station.station_id + "/" + station.station_code +
+                    "<br /><br /> On an average weekday, <b>" + total_rides + "</b> passengers begin a journey through this station."; 
+
+                infobox.select("p").html(html_string);
+
 
             }; // end station_info(station)
 
