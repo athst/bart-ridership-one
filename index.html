@@ -21,7 +21,7 @@ body {
     float:right;
     border: 1px solid;
     width: 200px;
-    height: 300px;
+    /*height: 300px; */
     padding: 10px;
     box-sizing: border-box;
 }
@@ -177,6 +177,9 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
                     });            
 
+            /* calculate station rank stats to put in the information box */
+
+                
             /* update the station information box on the right */
 
             function update_station_info(station) {
@@ -189,7 +192,34 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
                 total_rides = Math.round(d3.sum(rides));
 
+                // calculate total exits
 
+                total_exits = Math.round(d3.sum(ridership
+                    .filter(function(x) { return x.exit_station == station.station_code;})
+                    .map(function(x) {return x.avg_trips; })));
+               
+                // calculate station rank
+                var station_entry_totals = d3.nest()
+                    .key(function(x) {return x.entry_station;})
+                    //.rollup(function(leaves) {return {"total_trips": d3.sum(leaves, function(x) {return x.avg_trips;})};})
+                    .rollup(function(leaves) {return d3.sum(leaves, function(x) {return x.avg_trips;})})
+                    .entries(ridership);
+
+                station_entry_totals.sort(function(a,b) {return b.values - a.values;});
+
+                var station_entry_rank = station_entry_totals.map(function(x) {return x.key;});
+
+                selected_rank = station_entry_rank.indexOf(station.station_code) + 1;
+               
+                // source: https://gist.github.com/dubbs/5535349 
+                var suffix = function (n) {
+                  n = n % 10;
+                  return n > 3 ? 'th' : ['th', 'st', 'nd', 'rd'][n];
+                };
+
+                selected_rank = selected_rank + suffix(selected_rank)
+
+                // assemble the content of the box 
                 var infobox = d3.select("#stationinfo");
 
                 infobox.select("h3").text(station.station_name);
@@ -197,7 +227,10 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 var html_string = 
                     station.address + 
                     "<br /><br /><b>id: </b>" + station.station_id + "/" + station.station_code +
-                    "<br /><br /> On an average weekday, <b>" + total_rides + "</b> passengers begin a journey through this station."; 
+                    "<br /><br /> On an average weekday,<br /><br />" + 
+                    "<b>" + total_rides + "</b> passengers begin a journey through this station." +
+                    "<br /><br /> <b>" + total_exits + "</b> passengers end their journey at this station." +
+                    "<br /><br />" + "This is the <b>" + selected_rank + "</b> most popular station in the BART system (44 stations)."
 
                 infobox.select("p").html(html_string);
 
