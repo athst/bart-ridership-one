@@ -1,0 +1,45 @@
+station_id,name,description,address,lon,lat,station_code,station_name
+12TH,12th St. Oakland City Center (12TH),"1245 Broadway, Oakland CA 94612","1245 Broadway, Oakland CA 94612",-122.271604,37.803664,12,12th Street / Oakland City Center
+16TH,16th St. Mission (16TH),"2000 Mission Street, San Francisco CA 94110","2000 Mission Street, San Francisco CA 94110",-122.419694,37.765062,16,16th Street Mission
+19TH,19th St. Oakland (19TH),"1900 Broadway, Oakland CA 94612","1900 Broadway, Oakland CA 94612",-122.269029,37.80787,19,19th Street Oakland
+24TH,24th St. Mission (24TH),"2800 Mission Street, San Francisco CA 94110","2800 Mission Street, San Francisco CA 94110",-122.418466,37.752254,24,24th Street Mission
+ASHB,Ashby (ASHB),"3100 Adeline Street, Berkeley CA 94703","3100 Adeline Street, Berkeley CA 94703",-122.26978,37.853024,AS,Ashby
+BALB,Balboa Park (BALB),"401 Geneva Avenue, San Francisco CA 94112","401 Geneva Avenue, San Francisco CA 94112",-122.4474142,37.72198087,BP,Balboa Park
+BAYF,Bay Fair (BAYF),"15242 Hesperian Blvd., San Leandro CA 94578","15242 Hesperian Blvd., San Leandro CA 94578",-122.126871,37.697185,BF,Bayfair
+CAST,Castro Valley (CAST),"3301 Norbridge Dr., Castro Valley CA 94546","3301 Norbridge Dr., Castro Valley CA 94546",-122.075567,37.690754,CV,Castro Valley
+CIVC,Civic Center/UN Plaza (CIVC),"1150 Market Street, San Francisco CA 94102","1150 Market Street, San Francisco CA 94102",-122.413756,37.779528,CC,Civic Center
+COLM,Colma (COLM),"365 D Street, Colma CA 94014","365 D Street, Colma CA 94014",-122.466233,37.684638,CM,Colma
+COLS,Coliseum/Oakland Airport (COLS),"7200 San Leandro St., Oakland CA 94621","7200 San Leandro St., Oakland CA 94621",-122.197273,37.754006,CL,Coliseum / Oakland Airport
+CONC,Concord (CONC),"1451 Oakland Avenue, Concord CA 94520","1451 Oakland Avenue, Concord CA 94520",-122.029095,37.973737,CN,Concord
+DALY,Daly City (DALY),"500 John Daly Blvd., Daly City CA 94014","500 John Daly Blvd., Daly City CA 94014",-122.4690807,37.70612055,DC,Daly City
+DBRK,Downtown Berkeley (DBRK),"2160 Shattuck Avenue, Berkeley CA 94704","2160 Shattuck Avenue, Berkeley CA 94704",-122.268045,37.869867,BK,Berkeley
+DELN,El Cerrito del Norte (DELN),"6400 Cutting Blvd., El Cerrito CA 94530","6400 Cutting Blvd., El Cerrito CA 94530",-122.317269,37.925655,EN,El Cerrito Del Norte
+DUBL,Dublin/Pleasanton (DUBL),"5801 Owens Dr., Pleasanton CA 94588","5801 Owens Dr., Pleasanton CA 94588",-121.900367,37.701695,ED,Dublin / Pleasanton
+EMBR,Embarcadero (EMBR),"298 Market Street, San Francisco CA 94111","298 Market Street, San Francisco CA 94111",-122.396742,37.792976,EM,Embarcadero
+FRMT,Fremont (FRMT),"2000 BART Way, Fremont CA 94536","2000 BART Way, Fremont CA 94536",-121.9764,37.557355,FM,Fremont
+FTVL,Fruitvale (FTVL),"3401 East 12th Street, Oakland CA 94601","3401 East 12th Street, Oakland CA 94601",-122.224274,37.774963,FV,Fruitvale
+GLEN,Glen Park (GLEN),"2901 Diamond Street, San Francisco CA 94131","2901 Diamond Street, San Francisco CA 94131",-122.434092,37.732921,GP,Glen Park
+HAYW,Hayward (HAYW),"699 'B' Street, Hayward CA 94541","699 'B' Street, Hayward CA 94541",-122.087967,37.670399,HY,Hayward
+LAFY,Lafayette (LAFY),"3601 Deer Hill Road, Lafayette CA 94549","3601 Deer Hill Road, Lafayette CA 94549",-122.123801,37.893394,LF,Lafayette
+LAKE,Lake Merritt (LAKE),"800 Madison Street, Oakland CA 94607","800 Madison Street, Oakland CA 94607",-122.265609,37.797484,LM,Lake Merritt
+MCAR,MacArthur (MCAR),"555 40th Street, Oakland CA 94609","555 40th Street, Oakland CA 94609",-122.267227,37.828415,MA,MacArthur
+MLBR,Millbrae (MLBR),"200 North Rollins Road, Millbrae CA 94030","200 North Rollins Road, Millbrae CA 94030",-122.38666,37.599787,MB,Millbrae
+MONT,Montgomery St. (MONT),"598 Market Street, San Francisco CA 94104","598 Market Street, San Francisco CA 94104",-122.401407,37.789256,MT,Montgomery Street
+NBRK,North Berkeley (NBRK),"1750 Sacramento Street, Berkeley CA 94702","1750 Sacramento Street, Berkeley CA 94702",-122.283451,37.87404,NB,North Berkeley
+NCON,North Concord/Martinez (NCON),"3700 Port Chicago Highway, Concord CA 94520","3700 Port Chicago Highway, Concord CA 94520",-122.024597,38.003275,NC,North Concord / Martinez
+ORIN,Orinda (ORIN),"11 Camino Pablo, Orinda CA 94563","11 Camino Pablo, Orinda CA 94563",-122.1837911,37.87836087,OR,Orinda
+PHIL,Pleasant Hill/Contra Costa Centre (PHIL),"1365 Treat Blvd., Walnut Creek CA 94597","1365 Treat Blvd., Walnut Creek CA 94597",-122.056013,37.928403,PH,Pleasant Hill
+PITT,Pittsburg/Bay Point (PITT),"1700 West Leland Road, Pittsburg CA 94565","1700 West Leland Road, Pittsburg CA 94565",-121.945154,38.018914,WP,Pittsburg / Baypoint
+PLZA,El Cerrito Plaza (PLZA),"6699 Fairmount Avenue, El Cerrito CA 94530","6699 Fairmount Avenue, El Cerrito CA 94530",-122.2992715,37.9030588,EP,El Cerrito Plaza
+POWL,Powell St. (POWL),"899 Market Street, San Francisco CA 94102","899 Market Street, San Francisco CA 94102",-122.406857,37.784991,PL,Powell Street
+RICH,Richmond (RICH),"1700 Nevin Avenue, Richmond CA 94801","1700 Nevin Avenue, Richmond CA 94801",-122.353165,37.936887,RM,Richmond
+ROCK,Rockridge (ROCK),"5660 College Avenue, Oakland CA 94618","5660 College Avenue, Oakland CA 94618",-122.251793,37.844601,RR,Rockridge
+SANL,San Leandro (SANL),"1401 San Leandro Blvd., San Leandro CA 94577","1401 San Leandro Blvd., San Leandro CA 94577",-122.1613112,37.72261921,SL,San Leandro
+SBRN,San Bruno (SBRN),"1151 Huntington Avenue, San Bruno CA 94066","1151 Huntington Avenue, San Bruno CA 94066",-122.416038,37.637753,SB,San Bruno
+SFIA,San Francisco Int'l Airport (SFIA),"International Terminal, Level 3, San Francisco Int'l Airport CA 94128","International Terminal, Level 3, San Francisco Int'l Airport CA 94128",-122.392612,37.616035,SO,San Francisco International Airport
+SHAY,South Hayward (SHAY),"28601 Dixon Street, Hayward CA 94544","28601 Dixon Street, Hayward CA 94544",-122.0575506,37.63479954,SH,South Hayward
+SSAN,South San Francisco (SSAN),"1333 Mission Road, South San Francisco CA 94080","1333 Mission Road, South San Francisco CA 94080",-122.444116,37.664174,SS,South San Francisco
+UCTY,Union City (UCTY),"10 Union Square, Union City CA 94587","10 Union Square, Union City CA 94587",-122.017867,37.591208,UC,Union City
+WCRK,Walnut Creek (WCRK),"200 Ygnacio Valley Road, Walnut Creek CA 94596","200 Ygnacio Valley Road, Walnut Creek CA 94596",-122.067423,37.905628,WC,Walnut Creek
+WDUB,West Dublin/Pleasanton (WDUB),"6501 Golden Gate Drive, Dublin CA 94568","6501 Golden Gate Drive, Dublin CA 94568",-121.928099,37.699759,WD,West Dublin / Pleasanton
+WOAK,West Oakland (WOAK),"1451 7th Street, Oakland CA 94607","1451 7th Street, Oakland CA 94607",-122.2945822,37.80467476,OW,West Oakland

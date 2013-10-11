@@ -1,0 +1,317 @@
+<html>
+<head>
+<title>BART Stations</title>
+
+
+<script src="./d3.js" charset="utf-8"></script>
+
+<style>
+
+.dot {
+  stroke: #000;
+  opacity:0.8;
+}
+
+body {
+
+    font-family: "helvetica neue", "helvetica", arial, sans-serif;
+}
+
+svg {
+
+    float:left;
+}
+
+#stationinfo {
+    display:inline-block;
+    float:left;
+    border: 1px solid;
+    width: 200px;
+    /*height: 300px; */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#stationinfo h3 {
+
+    margin-top: 0px;
+    margin-bottom:0px;
+}
+</style>
+
+</head>
+<body>
+<h1>BART - Destination Stations by Entry, September 2013</h1>
+
+<script>
+
+var data;
+var ridership;
+
+d3.csv("./data/ridership_sep2013.csv",function(d) {
+   
+    /* may want to nest this with the other csv so can be sure that they're loaded in sequence */
+
+    for (i=0;i < d.length; i++) {
+
+                d[i].avg_trips = +d[i].avg_trips;
+                
+            }
+
+    ridership = d;
+
+    console.log('loaded ridership data');
+
+    d3.csv("./data/stations_matched.csv",function(d) {
+            
+            /* change format of some of the fields */
+
+            for (i=0;i < d.length; i++) {
+
+                d[i].lon = +d[i].lon;
+                d[i].lat = +d[i].lat;
+                
+            }
+
+            /* bind the data with the ridership exit data for a specific station to start with */
+           
+            // filter the ridership for the exists for a specific station
+
+            var selected_station = 'EM';
+
+            var station_exits = ridership.filter(function(x) {
+
+                    return x.entry_station == selected_station;
+                });     
+          
+            for (i=0; i < d.length; i++) {
+                
+                // find the exit values of the specific station
+
+                for (j=0; j < station_exits.length; j++) {
+                    
+                    if (station_exits[j].exit_station == d[i].station_code) {
+                        
+                        // set the value
+                        d[i].exits = station_exits[j].avg_trips;
+                    }
+                }
+
+            }
+            
+            data = d;
+
+            /* create the SVG and the chart */
+
+            /* basic source: http://bl.ocks.org/mbostock/3887118 */
+
+            var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                width = 800 - margin.left - margin.right,
+                height = 800 - margin.top - margin.bottom;
+
+            var svg = d3.select("body").append("svg")
+                .attr("width",width + margin.left + margin.right)
+                .attr("height",height + margin.top + margin.bottom)
+              .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            
+            var station_info = d3.select("body").append("div")
+                .attr("id","stationinfo");
+
+            station_info.append("h3");
+            station_info.append("p");
+        
+            /* create scale for the map bounds */
+
+            // min/max long
+            
+            lons = data.map(function(station) {return station.lon;});
+
+            lats = data.map(function(station) {return station.lat;});
+
+            // min/max lat
+
+            var lonScale = d3.scale.linear()
+                .domain([d3.min(lons),d3.max(lons)])
+                .range([0,width]);
+
+            var latScale = d3.scale.linear()
+                .domain([d3.min(lats),d3.max(lats)])
+                .range([height,0]);
+
+            
+            // min/max node size by the number of exits
+
+            var exit_limits = d3.extent(ridership,function(x) {return x.avg_trips;}); 
+
+            // use sqrt scale for area.  see: https://groups.google.com/forum/#!topic/d3-js/s7HwxUx2OQ8/discussion
+            var sizeScale = d3.scale.sqrt()
+                .domain([0,exit_limits[1]])
+                .range([2,30]);
+
+            /* draw circles on the SVG */
+
+            var dots =  svg.selectAll(".dot")
+                .data(data);
+
+            dots.enter().append("circle")
+                .attr("class", "dot")
+                .attr("r", function(d) {return sizeScale(d.exits); })
+                .attr("cx", function(d) {return lonScale(d.lon); })
+                .attr("cy", function(d) { return latScale(d.lat); })
+                .append("svg:title")
+                    .text(function(d) { return d.name; });
+          
+            // find the starting station to start with 
+    
+            for (k = 0; k < data.length; k++) {
+
+               if (data[k].station_code == 'EM') {
+
+
+                   // for the first station info, set it to EM  
+                   update_station_info(data[k]);
+
+               }
+            }
+
+            dots.on("click",function(x) {
+                   
+                    update_stations(x);
+
+                    update_station_info(x);
+
+                    });            
+
+            /* calculate station rank stats to put in the information box */
+
+                
+            /* update the station information box on the right */
+
+            function update_station_info(station) {
+
+                console.log("set station info");
+
+                // calculate various interesting stats
+
+                rides = data.map(function(x) { return x.exits; });
+
+                total_rides = Math.round(d3.sum(rides));
+
+                // calculate total exits
+
+                total_exits = Math.round(d3.sum(ridership
+                    .filter(function(x) { return x.exit_station == station.station_code;})
+                    .map(function(x) {return x.avg_trips; })));
+               
+                // calculate station rank
+                // TODO: take this out of this function so it doesn't have to recalculate every time
+                var station_entry_totals = d3.nest()
+                    .key(function(x) {return x.entry_station;})
+                    .rollup(function(leaves) {return d3.sum(leaves, function(x) {return x.avg_trips;})})
+                    .entries(ridership);
+
+                station_entry_totals.sort(function(a,b) {return b.values - a.values;});
+
+                var station_entry_rank = station_entry_totals.map(function(x) {return x.key;});
+
+                selected_rank = station_entry_rank.indexOf(station.station_code) + 1;
+               
+                // source: https://gist.github.com/dubbs/5535349 
+                var suffix = function (n) {
+                  n = n % 10;
+                  return n > 3 ? 'th' : ['th', 'st', 'nd', 'rd'][n];
+                };
+
+                selected_rank = selected_rank + suffix(selected_rank)
+
+                // assemble the content of the box 
+                var infobox = d3.select("#stationinfo");
+
+                infobox.select("h3").text(station.station_name);
+
+                var html_string = 
+                    station.address + 
+                    "<br /><br /><b>id: </b>" + station.station_id + "/" + station.station_code +
+                    "<br /><br /> On an average weekday,<br /><br />" + 
+                    "<b>" + total_rides + "</b> passengers begin a journey through this station." +
+                    "<br /><br /> <b>" + total_exits + "</b> passengers end their journey at this station." +
+                    "<br /><br />" + "This is the <b>" + selected_rank + "</b> most popular station in the BART system (44 stations)."
+
+                infobox.select("p").html(html_string);
+
+
+            }; // end station_info(station)
+
+            /* update the dots appropriately */
+
+            function update_stations(station) {
+                
+                // update the data based on the clicked station
+               
+                console.log("clicked station: " + station.station_code);
+
+                var selected_station = station.station_code;
+
+                var station_exits = ridership.filter(function(x) {
+
+                        return x.entry_station == selected_station;
+                    });     
+              
+                for (i=0; i < data.length; i++) {
+                    
+                    // find the exit values of the specific station
+
+                    for (j=0; j < station_exits.length; j++) {
+                        
+                        if (station_exits[j].exit_station == data[i].station_code) {
+                            
+                            // set the value
+                            console.log("value found!");
+
+                            data[i].exits = station_exits[j].avg_trips;
+                            
+                            // selected station flag
+
+                            if (station_exits[j].exit_station == station.station_code) {
+
+                                data[i].selected_station = true;
+                            }
+                            else {
+
+                                data[i].selected_station = false;
+                            }
+                        }
+                    }
+
+                }
+
+
+                // rebind the data
+                svg.selectAll(".dot")
+                    .data(data)
+                 .transition()
+                .attr("r", function(d) {return sizeScale(d.exits); })
+                .attr("cx", function(d) {return lonScale(d.lon); })
+                .attr("cy", function(d) { return latScale(d.lat); })
+                .attr("fill", function(d) {
+                            if (d.selected_station == true) { 
+                            
+                                return "red";
+                            }
+                            else {
+                                return "black";
+                            }; 
+                        })
+
+            }; // end update_stations() function
+
+    }) // end d3.csv
+
+}) // end d3.csv
+;
+
+</script>
+
+</body>
+</html>
