@@ -103,11 +103,13 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .attr("height",height + margin.top + margin.bottom)
               .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            var station_info = d3.select("body").append("div")
-                .attr("id","stationinfo")
-                .text("test")
             
+            var station_info = d3.select("body").append("div")
+                .attr("id","stationinfo");
+
+            station_info.append("h3");
+            station_info.append("p");
+        
             /* create scale for the map bounds */
 
             // min/max long
@@ -149,19 +151,39 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .append("svg:title")
                     .text(function(d) { return d.name; });
           
+            // find the starting station to start with 
+    
+            for (k = 0; k < data.length; k++) {
+
+               if (data[k].station_code == 'EM') {
+
+
+                   // for the first station info, set it to EM  
+                   update_station_info(data[k]);
+
+               }
+            }
 
             dots.on("click",function(x) {
                    
                     update_stations(x);
 
+                    update_station_info(x);
+
                     });            
 
             /* update the station information box on the right */
 
-            function station_info(station) {
+            function update_station_info(station) {
 
-                
-            } // end station_info(station) function
+                console.log("set station info");
+
+                    
+                var infobox = d3.select("#stationinfo");
+
+                infobox.select("h3").text(station.station_name);
+
+            }; // end station_info(station)
 
             /* update the dots appropriately */
 
@@ -203,8 +225,6 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .attr("r", function(d) {return sizeScale(d.exits); })
                 .attr("cx", function(d) {return lonScale(d.lon); })
                 .attr("cy", function(d) { return latScale(d.lat); })
-                .append("svg:title")
-                    .text(function(d) { return d.name; });
 
             }; // end update_stations() function
 
