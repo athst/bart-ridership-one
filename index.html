@@ -199,9 +199,9 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                     .map(function(x) {return x.avg_trips; })));
                
                 // calculate station rank
+                // TODO: take this out of this function so it doesn't have to recalculate every time
                 var station_entry_totals = d3.nest()
                     .key(function(x) {return x.entry_station;})
-                    //.rollup(function(leaves) {return {"total_trips": d3.sum(leaves, function(x) {return x.avg_trips;})};})
                     .rollup(function(leaves) {return d3.sum(leaves, function(x) {return x.avg_trips;})})
                     .entries(ridership);
 
