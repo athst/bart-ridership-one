@@ -20,7 +20,7 @@ body {
 
 </head>
 <body>
-<h1>BART Stations - Weekday Destination</h1>
+<h1>BART Stations - Weekday Ridership, September 2013</h1>
 
 <script>
 
@@ -98,8 +98,6 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
             // min/max long
             
-            // might be able to replace this with d3.extent() and .nice()
-
             lons = data.map(function(station) {return station.lon;});
 
             lats = data.map(function(station) {return station.lat;});
@@ -159,29 +157,29 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                
                 console.log("clicked station: " + station.station_code);
 
-            var selected_station = station.station_code;
+                var selected_station = station.station_code;
 
-            var station_exits = ridership.filter(function(x) {
+                var station_exits = ridership.filter(function(x) {
 
-                    return x.entry_station == selected_station;
-                });     
-          
-            for (i=0; i < data.length; i++) {
-                
-                // find the exit values of the specific station
-
-                for (j=0; j < station_exits.length; j++) {
+                        return x.entry_station == selected_station;
+                    });     
+              
+                for (i=0; i < data.length; i++) {
                     
-                    if (station_exits[j].exit_station == data[i].station_code) {
+                    // find the exit values of the specific station
+
+                    for (j=0; j < station_exits.length; j++) {
                         
-                        // set the value
-                        console.log("value found!");
+                        if (station_exits[j].exit_station == data[i].station_code) {
+                            
+                            // set the value
+                            console.log("value found!");
 
-                        data[i].exits = station_exits[j].avg_trips;
+                            data[i].exits = station_exits[j].avg_trips;
+                        }
                     }
-                }
 
-            }
+                }
 
 
                 // rebind the data
@@ -192,11 +190,13 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .attr("cx", function(d) {return lonScale(d.lon); })
                 .attr("cy", function(d) { return latScale(d.lat); })
                 .append("svg:title")
-                    .text(function(d) { return d.name; });;
-            };
-    })
+                    .text(function(d) { return d.name; });
 
-})
+            }; // end update_stations() function
+
+    }) // end d3.csv
+
+}) // end d3.csv
 ;
 
 </script>
