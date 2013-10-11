@@ -41,7 +41,9 @@ svg {
 
 </head>
 <body>
-<h1>BART - Destination Stations by Entry, September 2013</h1>
+<h1>BART - Destinations by Entry Station, September 2013</h1>
+
+<div>Where do BART riders go from a given station?</div>
 
 <script>
 
@@ -94,6 +96,18 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                         
                         // set the value
                         d[i].exits = station_exits[j].avg_trips;
+
+                         // selected station flag
+
+                        if (station_exits[j].exit_station == selected_station) {
+
+                            d[i].selected_station = true;
+                        }
+                        else {
+
+                            d[i].selected_station = false;
+                        }
+
                     }
                 }
 
@@ -159,6 +173,15 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .attr("r", function(d) {return sizeScale(d.exits); })
                 .attr("cx", function(d) {return lonScale(d.lon); })
                 .attr("cy", function(d) { return latScale(d.lat); })
+                .attr("fill", function(d) {
+                            if (d.selected_station == true) { 
+                            
+                                return "red";
+                            }
+                            else {
+                                return "black";
+                            }; 
+                        })
                 .append("svg:title")
                     .text(function(d) { return d.name; });
           
@@ -228,12 +251,11 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 // assemble the content of the box 
                 var infobox = d3.select("#stationinfo");
 
-                infobox.select("h3").text(station.station_name);
+                infobox.select("h3").text(station.station_name + " (" + station.station_code + ")");
 
                 var html_string = 
                     station.address + 
-                    "<br /><br /><b>id: </b>" + station.station_id + "/" + station.station_code +
-                    "<br /><br /> On an average weekday,<br /><br />" + 
+                    "<br /><br />On an average weekday:<br /><br />" + 
                     "<b>" + total_rides + "</b> passengers begin a journey through this station." +
                     "<br /><br /> <b>" + total_exits + "</b> passengers end their journey at this station." +
                     "<br /><br />" + "This is the <b>" + selected_rank + "</b> most popular station in the BART system (44 stations)."
