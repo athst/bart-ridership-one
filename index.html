@@ -16,6 +16,16 @@ body {
     font-family: "helvetica neue", "helvetica", arial, sans-serif;
 }
 
+#stationinfo {
+    display:inline-block;
+    float:right;
+    border: 1px solid;
+    width: 200px;
+    height: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
 </style>
 
 </head>
@@ -94,6 +104,10 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
               .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+            var station_info = d3.select("body").append("div")
+                .attr("id","stationinfo")
+                .text("test")
+            
             /* create scale for the map bounds */
 
             // min/max long
@@ -135,20 +149,20 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .append("svg:title")
                     .text(function(d) { return d.name; });
           
-            /*  
-            dots.on("click",function(x) {
-                
-                    console.log("clicked station: " + x.station_code);
-
-                    });            
-            */
 
             dots.on("click",function(x) {
                    
                     update_stations(x);
 
                     });            
-            
+
+            /* update the station information box on the right */
+
+            function station_info(station) {
+
+                
+            } // end station_info(station) function
+
             /* update the dots appropriately */
 
             function update_stations(station) {
