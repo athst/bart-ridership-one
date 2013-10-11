@@ -230,12 +230,11 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 // assemble the content of the box 
                 var infobox = d3.select("#stationinfo");
 
-                infobox.select("h3").text(station.station_name);
+                infobox.select("h3").text(station.station_name + " (" + station.station_code + ")");
 
                 var html_string = 
                     station.address + 
-                    "<br /><br /><b>id: </b>" + station.station_id + "/" + station.station_code +
-                    "<br /><br /> On an average weekday,<br /><br />" + 
+                    "<br /><br />On an average weekday:<br /><br />" + 
                     "<b>" + total_rides + "</b> passengers begin a journey through this station." +
                     "<br /><br /> <b>" + total_exits + "</b> passengers end their journey at this station." +
                     "<br /><br />" + "This is the <b>" + selected_rank + "</b> most popular station in the BART system (44 stations)."
