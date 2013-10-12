@@ -20,16 +20,23 @@ body {
 svg {
 
     float:left;
+    z-index:0;
 }
 
 #stationinfo {
     display:inline-block;
-    float:left;
+    float:right;
     border: 1px solid;
     width: 200px;
     /*height: 300px; */
     padding: 10px;
     box-sizing: border-box;
+    position:absolute;
+    /*margin:0px;*/
+    /*top:20px;*/
+    right:20px;
+    z-index:900;
+    background-color: white;
 }
 
 #stationinfo h3 {
@@ -120,8 +127,8 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
             /* basic source: http://bl.ocks.org/mbostock/3887118 */
 
             var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                width = 800 - margin.left - margin.right,
-                height = 800 - margin.top - margin.bottom;
+                width = 700 - margin.left - margin.right,
+                height = 700 - margin.top - margin.bottom;
 
             var svg = d3.select("body").append("svg")
                 .attr("width",width + margin.left + margin.right)
