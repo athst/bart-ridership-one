@@ -65,9 +65,7 @@ svg {
 </head>
 <body>
 <h1>BART - Destinations by Entry Station, September 2013</h1>
-
 <div>Where do BART riders go from a given station?</div>
-
 <script>
 
 var data;
@@ -284,7 +282,10 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                     "<br /><br />On an average weekday:<br /><br />" + 
                     "<b>" + total_rides + "</b> passengers begin a journey through this station." +
                     "<br /><br /> <b>" + total_exits + "</b> passengers end their journey at this station." +
-                    "<br /><br />" + "This is the <b>" + selected_rank + "</b> most popular station in the BART system (44 stations)."
+                    "<br /><br />" + "This is the <b>" + selected_rank + "</b> most popular station in the BART system (44 stations)." +
+                    "<hr>" +
+                    "<span style=\"font-size:0.9em\">" + "by: <a href=\"https://twitter.com/athst\">Jon</a>" +
+                    "<br /><br />" + "more: <a href=\"http://enjalot.github.io/bart/\">Visualizing the BART Labor Dispute</a>"
 
                 infobox.select("p").html(html_string);
 
