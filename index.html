@@ -35,7 +35,7 @@ svg {
     /*margin:0px;*/
     /*top:20px;*/
     right:20px;
-    z-index:900;
+    z-index:500;
     background-color: white;
 }
 
@@ -43,6 +43,22 @@ svg {
 
     margin-top: 0px;
     margin-bottom:0px;
+}
+
+
+.tooltip {
+    background-color: white;
+    border: 1px solid;
+    z-index:600;
+    padding:4px;
+}
+
+.tooltip h4 {
+    margin: 0px; 
+}
+.tooltip p {
+    margin: 0px;
+    color: grey;
 }
 </style>
 
@@ -87,6 +103,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
             // filter the ridership for the exists for a specific station
 
             var selected_station = 'EM';
+            var selected_station_name = "Embarcadero";
 
             var station_exits = ridership.filter(function(x) {
 
@@ -103,6 +120,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                         
                         // set the value
                         d[i].exits = station_exits[j].avg_trips;
+                        d[i].entry_station_name = selected_station_name;
 
                          // selected station flag
 
@@ -189,6 +207,9 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                                 return "black";
                             }; 
                         })
+            .on("mouseover", function(d) { return tooltip.style("visibility","visible").html("<h4>" + d.station_name + "</h4><p>average: " + Math.round(d.exits) + " passengers a day<br /> from " + d.entry_station_name + " Station</p>"); })
+                .on("mousemove", function() { return tooltip.style("top", (event.pageY - 10) + "px").style("left",(event.pageX + 10) + "px");})
+                .on("mouseout", function() { return tooltip.style("visibility","hidden");})
                 .append("svg:title")
                     .text(function(d) { return d.name; });
           
@@ -280,7 +301,8 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                
                 console.log("clicked station: " + station.station_code);
 
-                var selected_station = station.station_code;
+                selected_station = station.station_code;
+                selected_station_name = station.station_name;
 
                 var station_exits = ridership.filter(function(x) {
 
@@ -299,6 +321,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                             console.log("value found!");
 
                             data[i].exits = station_exits[j].avg_trips;
+                            data[i].entry_station_name = selected_station_name;
                             
                             // selected station flag
 
@@ -335,6 +358,16 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
             }; // end update_stations() function
 
+            /* tooltip functionality */
+            // technique from: http://bl.ocks.org/biovisualize/1016860
+
+            var tooltip = d3.select("body")
+                .append("div")
+                .style("position","absolute")
+                .style("visibility","hidden")
+                .attr("class","tooltip")
+                .text("this is is a tooltip");
+            
     }) // end d3.csv
 
 }) // end d3.csv
