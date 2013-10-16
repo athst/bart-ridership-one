@@ -31,21 +31,31 @@ svg {
     z-index:0;
 }
 
+#infocontainer {
+    display:inline-block;
+    float:right;
+    width:200px;
+    box-sizing: border-box;
+    position:absolute;
+    right:20px;
+}
+
+
 #stationinfo {
     display:inline-block;
     float:right;
     border: 1px solid;
-    width: 200px;
+    /*width: 200px;*/
     /*height: 300px; */
     padding: 10px;
     box-sizing: border-box;
-    position:absolute;
+    /*position:absolute;*/
     /*margin:0px;*/
     /*top:20px;*/
-    right:20px;
+    /*right:20px;*/
     z-index:500;
     background-color: white;
-    top:130px;
+    /*top:130px;*/
 }
 
 #stationinfo h3 {
@@ -71,21 +81,24 @@ svg {
 }
 
 .modediv {
-    display:inline-block;
-    float:right;
-    position:absolute;
-    right:20px;
+    /*display:inline-block;*/
+    /*float:right;*/
+    /*position:absolute;*/
+    /*right:20px;*/
+    margin-bottom: 5px;
 }
 
 .modebutton {
     background-color: black;
     color: white;
-    border: 1px solid;
+    border: 1px solid black;;
     padding: 10px;
     display:block;
     width:200px;
     box-sizing: border-box;
     text-align: center;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
 }
 
 </style>
@@ -181,8 +194,23 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 width = 700 - margin.left - margin.right,
                 height = 700 - margin.top - margin.bottom;
             
+
+
+            // appending the main SVG
+            var svg = d3.select("body").append("svg")
+                .attr("width",width + margin.left + margin.right)
+                .attr("height",height + margin.top + margin.bottom)
+              .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          
+            // first append the container for the station info and other items
+
+            var infocontainer = d3.select("body")
+              .append("div")
+                .attr("id","infocontainer");
+
             // append the button to have the "all stations" mode
-            var modebutton = d3.select("body")
+            var modebutton = d3.select("#infocontainer")
               .append("div")
                 .attr("class","modediv")
               .append("a")
@@ -192,21 +220,13 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
             modebutton.on("click",function() {
                         
                         // call the "all stations" function
-
                         total_ridership_mode();
 
                     });
 
-
-            // appending the main SVG
-            var svg = d3.select("body").append("svg")
-                .attr("width",width + margin.left + margin.right)
-                .attr("height",height + margin.top + margin.bottom)
-              .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-           
             // append the station info box 
-            var station_info = d3.select("body").append("div")
+            var station_info = d3.select("#infocontainer")
+              .append("div")
                 .attr("id","stationinfo");
 
             station_info.append("h3");
