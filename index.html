@@ -20,23 +20,33 @@ body {
 svg {
 
     float:left;
+<<<<<<< HEAD
     z-index:0;
+=======
+>>>>>>> master
 }
 
 #stationinfo {
     display:inline-block;
+<<<<<<< HEAD
     float:right;
+=======
+    float:left;
+>>>>>>> master
     border: 1px solid;
     width: 200px;
     /*height: 300px; */
     padding: 10px;
     box-sizing: border-box;
+<<<<<<< HEAD
     position:absolute;
     /*margin:0px;*/
     /*top:20px;*/
     right:20px;
     z-index:500;
     background-color: white;
+=======
+>>>>>>> master
 }
 
 #stationinfo h3 {
@@ -44,6 +54,7 @@ svg {
     margin-top: 0px;
     margin-bottom:0px;
 }
+<<<<<<< HEAD
 
 
 .tooltip {
@@ -60,12 +71,19 @@ svg {
     margin: 0px;
     color: grey;
 }
+=======
+>>>>>>> master
 </style>
 
 </head>
 <body>
+<<<<<<< HEAD
 <h1>BART - Destinations by Entry Station, September 2013</h1>
 <div>Where do BART riders go from a given station?</div>
+=======
+<h1>BART - Destination Stations by Entry, September 2013</h1>
+
+>>>>>>> master
 <script>
 
 var data;
@@ -101,7 +119,10 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
             // filter the ridership for the exists for a specific station
 
             var selected_station = 'EM';
+<<<<<<< HEAD
             var selected_station_name = "Embarcadero";
+=======
+>>>>>>> master
 
             var station_exits = ridership.filter(function(x) {
 
@@ -118,6 +139,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                         
                         // set the value
                         d[i].exits = station_exits[j].avg_trips;
+<<<<<<< HEAD
                         d[i].entry_station_name = selected_station_name;
 
                          // selected station flag
@@ -131,6 +153,8 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                             d[i].selected_station = false;
                         }
 
+=======
+>>>>>>> master
                     }
                 }
 
@@ -143,8 +167,13 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
             /* basic source: http://bl.ocks.org/mbostock/3887118 */
 
             var margin = {top: 20, right: 20, bottom: 30, left: 40},
+<<<<<<< HEAD
                 width = 700 - margin.left - margin.right,
                 height = 700 - margin.top - margin.bottom;
+=======
+                width = 800 - margin.left - margin.right,
+                height = 800 - margin.top - margin.bottom;
+>>>>>>> master
 
             var svg = d3.select("body").append("svg")
                 .attr("width",width + margin.left + margin.right)
@@ -196,6 +225,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .attr("r", function(d) {return sizeScale(d.exits); })
                 .attr("cx", function(d) {return lonScale(d.lon); })
                 .attr("cy", function(d) { return latScale(d.lat); })
+<<<<<<< HEAD
                 .attr("fill", function(d) {
                             if (d.selected_station == true) { 
                             
@@ -208,6 +238,10 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
             .on("mouseover", function(d) { return tooltip.style("visibility","visible").html("<h4>" + d.station_name + "</h4><p>average: " + Math.round(d.exits) + " passengers a day<br /> from " + d.entry_station_name + " Station</p>"); })
                 .on("mousemove", function() { return tooltip.style("top", (event.pageY - 10) + "px").style("left",(event.pageX + 10) + "px");})
                 .on("mouseout", function() { return tooltip.style("visibility","hidden");});
+=======
+                .append("svg:title")
+                    .text(function(d) { return d.name; });
+>>>>>>> master
           
             // find the starting station to start with 
     
@@ -275,6 +309,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 // assemble the content of the box 
                 var infobox = d3.select("#stationinfo");
 
+<<<<<<< HEAD
                 infobox.select("h3").text(station.station_name + " (" + station.station_code + ")");
 
                 var html_string = 
@@ -286,6 +321,17 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                     "<hr>" +
                     "<span style=\"font-size:0.9em\">" + "by: <a href=\"https://twitter.com/athst\">Jon</a>" +
                     "<br /><br />" + "more: <a href=\"http://enjalot.github.io/bart/\">Visualizing the BART Labor Dispute</a>"
+=======
+                infobox.select("h3").text(station.station_name);
+
+                var html_string = 
+                    station.address + 
+                    "<br /><br /><b>id: </b>" + station.station_id + "/" + station.station_code +
+                    "<br /><br /> On an average weekday,<br /><br />" + 
+                    "<b>" + total_rides + "</b> passengers begin a journey through this station." +
+                    "<br /><br /> <b>" + total_exits + "</b> passengers end their journey at this station." +
+                    "<br /><br />" + "This is the <b>" + selected_rank + "</b> most popular station in the BART system (44 stations)."
+>>>>>>> master
 
                 infobox.select("p").html(html_string);
 
@@ -300,8 +346,12 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                
                 console.log("clicked station: " + station.station_code);
 
+<<<<<<< HEAD
                 selected_station = station.station_code;
                 selected_station_name = station.station_name;
+=======
+                var selected_station = station.station_code;
+>>>>>>> master
 
                 var station_exits = ridership.filter(function(x) {
 
@@ -320,7 +370,10 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                             console.log("value found!");
 
                             data[i].exits = station_exits[j].avg_trips;
+<<<<<<< HEAD
                             data[i].entry_station_name = selected_station_name;
+=======
+>>>>>>> master
                             
                             // selected station flag
 
@@ -357,6 +410,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
             }; // end update_stations() function
 
+<<<<<<< HEAD
             /* tooltip functionality */
             // technique from: http://bl.ocks.org/biovisualize/1016860
 
@@ -367,6 +421,8 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .attr("class","tooltip")
                 .text("this is is a tooltip");
             
+=======
+>>>>>>> master
     }) // end d3.csv
 
 }) // end d3.csv
@@ -374,6 +430,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
 </script>
 
+<<<<<<< HEAD
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -384,5 +441,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
   ga('send', 'pageview');
 
 </script>
+=======
+>>>>>>> master
 </body>
 </html>
