@@ -90,6 +90,7 @@ svg {
 
 var data;
 var ridership;
+var station_entry_totals;
 
 d3.csv("./data/ridership_sep2013.csv",function(d) {
    
@@ -104,6 +105,12 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
     ridership = d;
 
     console.log('loaded ridership data');
+
+    // calculate the station entry totals for use later
+    station_entry_totals = d3.nest()
+        .key(function(x) {return x.entry_station;})
+        .rollup(function(leaves) {return d3.sum(leaves, function(x) {return x.avg_trips;})})
+        .entries(ridership);
 
     d3.csv("./data/stations_matched.csv",function(d) {
             
@@ -245,7 +252,17 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                                 return "black";
                             }; 
                         })
-            .on("mouseover", function(d) { return tooltip.style("visibility","visible").html("<h4>" + d.station_name + "</h4><p>average: " + Math.round(d.exits) + " passengers a day<br /> from " + d.entry_station_name + " Station</p>"); })
+            .on("mouseover", function(d) { 
+                    // change return based on if entry station is available or not (all stations mode)
+                    if (d.entry_station_name == "") {
+                    return tooltip.style("visibility","visible").html("<h4>" + d.station_name + "</h4><p>an average of " + Math.round(d.exits) + "<br /> passengers enter here<br /> every weekday</p>"); 
+
+                    }
+                    else {
+                        return tooltip.style("visibility","visible").html("<h4>" + d.station_name + "</h4><p>average: " + Math.round(d.exits) + " passengers a day<br /> from " + d.entry_station_name + " Station</p>"); 
+
+                    }
+                    })
                 .on("mousemove", function() { return tooltip.style("top", (event.pageY - 10) + "px").style("left",(event.pageX + 10) + "px");})
                 .on("mouseout", function() { return tooltip.style("visibility","hidden");});
           
@@ -292,11 +309,6 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                     .map(function(x) {return x.avg_trips; })));
                
                 // calculate station rank
-                // TODO: take this out of this function so it doesn't have to recalculate every time
-                var station_entry_totals = d3.nest()
-                    .key(function(x) {return x.entry_station;})
-                    .rollup(function(leaves) {return d3.sum(leaves, function(x) {return x.avg_trips;})})
-                    .entries(ridership);
 
                 station_entry_totals.sort(function(a,b) {return b.values - a.values;});
 
@@ -414,6 +426,62 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
                 console.log("sizing stations to all ridership!");
 
+                // read through the station data array and match with the totals
+
+                for (i=0; i < data.length; i++) {
+                    
+                    // find the exit values of the specific station
+
+                    for (j=0; j < station_entry_totals.length; j++) {
+                        
+                        if (station_entry_totals[j].key == data[i].station_code) {
+                            
+                            // set the value
+                            console.log("value found!");
+
+                            data[i].exits = station_entry_totals[j].values;
+                            
+                            // for all stations, set entry station to blank 
+                            data[i].entry_station_name = "";
+                            
+                            // selected station flag
+
+                            // set the selected station flag to always false, because this is "all stations" mode
+
+                            data[i].selected_station = false;
+
+                        }
+                    }
+                }
+
+                // create new scales to fit the total
+                
+                total_entry_limits = d3.extent(station_entry_totals.map(function(x) { return x.values; }));
+
+                // TODO: may want to standardize the range values up top so don't have to change them separately for both
+                var allStationsSizeScale = d3.scale.sqrt()
+                    .domain([0,total_entry_limits[1]])
+                    .range([2,30]); 
+
+
+                // rebind the data with the total info
+
+                svg.selectAll(".dot")
+                    .data(data)
+                 .transition()
+                .attr("r", function(d) {return allStationsSizeScale(d.exits); })
+                .attr("cx", function(d) {return lonScale(d.lon); })
+                .attr("cy", function(d) { return latScale(d.lat); })
+                .attr("fill", function(d) {
+                            if (d.selected_station == true) { 
+                            
+                                return "red";
+                            }
+                            else {
+                                return "black";
+                            }; 
+                        })
+                
             }; // end total_ridership_mode() function
 
     }) // end d3.csv
