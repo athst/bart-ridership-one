@@ -60,6 +60,10 @@ svg {
     margin: 0px;
     color: grey;
 }
+
+.modebutton {
+    color: blue;
+}
 </style>
 
 </head>
@@ -145,19 +149,33 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
             var margin = {top: 20, right: 20, bottom: 30, left: 40},
                 width = 700 - margin.left - margin.right,
                 height = 700 - margin.top - margin.bottom;
+            
+            // append the button to have the "all stations" mode
+            var modebutton = d3.select("body").append("a")
+                .attr("class","modebutton")
+                .text("test");
 
+            modebutton.on("click",function() {
+                        
+                        console.log("clicked the mode selector!");            
+                    });
+
+
+            // appending the main SVG
             var svg = d3.select("body").append("svg")
                 .attr("width",width + margin.left + margin.right)
                 .attr("height",height + margin.top + margin.bottom)
               .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            
+           
+            // append the station info box 
             var station_info = d3.select("body").append("div")
                 .attr("id","stationinfo");
 
             station_info.append("h3");
             station_info.append("p");
-        
+
+
             /* create scale for the map bounds */
 
             // min/max long
