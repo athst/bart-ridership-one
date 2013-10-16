@@ -176,7 +176,10 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
 
             modebutton.on("click",function() {
                         
-                        console.log("clicked the mode selector!");            
+                        // call the "all stations" function
+
+                        total_ridership_mode();
+
                     });
 
 
@@ -403,7 +406,16 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .style("visibility","hidden")
                 .attr("class","tooltip")
                 .text("this is is a tooltip");
-            
+
+            /* "all stations" mode function */
+
+            function total_ridership_mode() {
+
+
+                console.log("sizing stations to all ridership!");
+
+            }; // end total_ridership_mode() function
+
     }) // end d3.csv
 
 }) // end d3.csv
