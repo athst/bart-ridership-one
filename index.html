@@ -89,9 +89,9 @@ svg {
 }
 
 .modebutton {
-    background-color: black;
-    color: white;
-    border: 1px solid black;;
+    /*background-color: black;*/
+    color: black;
+    border: 3px solid green;
     padding: 10px;
     display:block;
     width:200px;
@@ -99,6 +99,12 @@ svg {
     text-align: center;
     border-radius: 10px;
     -moz-border-radius: 10px;
+    font-weight:bold;
+}
+
+.modebutton:hover {
+    background-color:green;
+    color:white;
 }
 
 </style>
@@ -215,7 +221,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 .attr("class","modediv")
               .append("a")
                 .attr("class","modebutton")
-                .text("select all stations");
+                .text("show all riders");
 
             modebutton.on("click",function() {
                         
