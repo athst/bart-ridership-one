@@ -559,6 +559,23 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                                 return "black";
                             }; 
                         })
+
+                // change the content of the info box so people know that they're in the "all stations" mode
+
+                // assemble the content of the box 
+                var infobox = d3.select("#stationinfo");
+
+                infobox.select("h3").text("All BART Riders");
+
+                var html_string = 
+                    "On an average weekday in September 2013, <b>" + Math.round(d3.sum(station_entry_totals.map(function(x) {return x.values;}))) +
+                    "</b> rides were made on the BART system." + 
+                    "<br /><br />Click an entry station to see where the passengers who boarded there went." +
+                    "<br /><br /><hr /><br />" +
+                    "<span style=\"font-size:0.9em\">" + "by: <a href=\"https://twitter.com/athst\">Jon</a>" +
+                    "<br /><br />" + "more: <a href=\"http://enjalot.github.io/bart/\">Visualizing the BART Labor Dispute</a>"
+
+                infobox.select("p").html(html_string);
                 
             }; // end total_ridership_mode() function
 
