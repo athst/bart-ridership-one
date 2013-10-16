@@ -37,6 +37,7 @@ svg {
     right:20px;
     z-index:500;
     background-color: white;
+    top:130px;
 }
 
 #stationinfo h3 {
@@ -61,9 +62,24 @@ svg {
     color: grey;
 }
 
-.modebutton {
-    color: blue;
+.modediv {
+    display:inline-block;
+    float:right;
+    position:absolute;
+    right:20px;
 }
+
+.modebutton {
+    background-color: black;
+    color: white;
+    border: 1px solid;
+    padding: 10px;
+    display:block;
+    width:200px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
 </style>
 
 </head>
@@ -151,9 +167,12 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 height = 700 - margin.top - margin.bottom;
             
             // append the button to have the "all stations" mode
-            var modebutton = d3.select("body").append("a")
+            var modebutton = d3.select("body")
+              .append("div")
+                .attr("class","modediv")
+              .append("a")
                 .attr("class","modebutton")
-                .text("test");
+                .text("select all stations");
 
             modebutton.on("click",function() {
                         
