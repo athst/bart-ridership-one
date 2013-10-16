@@ -112,7 +112,6 @@ svg {
 </head>
 <body>
 <h1>BART - Destinations by Entry Station, September 2013</h1>
-<div>Where do BART riders go from a given station?</div>
 <script>
 
 var data;
@@ -570,7 +569,7 @@ d3.csv("./data/ridership_sep2013.csv",function(d) {
                 var html_string = 
                     "On an average weekday in September 2013, <b>" + Math.round(d3.sum(station_entry_totals.map(function(x) {return x.values;}))) +
                     "</b> rides were made on the BART system." + 
-                    "<br /><br />Click an entry station to see where the passengers who boarded there went." +
+                    "<br /><br />Where did they go?<br /><br />Click an entry station to see where the passengers who boarded there went." +
                     "<br /><br /><hr /><br />" +
                     "<span style=\"font-size:0.9em\">" + "by: <a href=\"https://twitter.com/athst\">Jon</a>" +
                     "<br /><br />" + "more: <a href=\"http://enjalot.github.io/bart/\">Visualizing the BART Labor Dispute</a>"
